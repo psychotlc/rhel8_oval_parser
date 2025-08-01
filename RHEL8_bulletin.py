@@ -16,7 +16,14 @@ HEADERS = {
 
 def download_and_extract_oval(url: str) -> str:
     """
-    Загружает и распаковывает OVAL-файл (bzip2)
+    Загружает OVAL-файл в формате .bz2 по указанному URL и распаковывает его.
+
+    Аргументы:
+        url (str): URL-адрес OVAL-файла в формате bzip2.
+
+    Возвращает:
+        str: Распакованное содержимое XML-файла в виде строки.
+             Возвращает пустую строку при ошибке.
     """
     try:
         print(f"Загрузка OVAL-файла: {url}")
@@ -37,7 +44,14 @@ def download_and_extract_oval(url: str) -> str:
 
 def parse_oval_xml(xml_content: str) -> List[str]:
     """
-    Парсит XML OVAL-файла и извлекает CVE
+    Извлекает идентификаторы CVE из XML-контента OVAL-файла.
+
+    Аргументы:
+        xml_content (str): Содержимое XML-файла в виде строки.
+
+    Возвращает:
+        List[str]: Список уникальных CVE-идентификаторов, отсортированный по алфавиту.
+                   Возвращает пустой список при ошибке или пустом вводе.
     """
     if not xml_content:
         return []
@@ -80,7 +94,14 @@ def parse_oval_xml(xml_content: str) -> List[str]:
 
 def save_results(filename: str, cves: List[str]) -> None:
     """
-    Сохраняет список CVE в файл
+    Сохраняет список CVE-идентификаторов в текстовый файл.
+
+    Аргументы:
+        filename (str): Имя файла для сохранения.
+        cves (List[str]): Список CVE-идентификаторов.
+
+    Возвращает:
+        None
     """
     try:
         with open(filename, 'w', encoding='utf-8') as f:
@@ -91,6 +112,12 @@ def save_results(filename: str, cves: List[str]) -> None:
 
 
 def main() -> None:
+    """
+    Главная функция скрипта. Выполняет загрузку OVAL-файла, извлекает CVE и сохраняет результат.
+    
+    Возвращает:
+        None
+    """
     output = "RHEL8_bulletin.txt"
 
     print("=== Сбор CVE для Red Hat Enterprise Linux 8 ===")
